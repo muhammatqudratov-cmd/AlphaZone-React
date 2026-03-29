@@ -26,6 +26,8 @@ export default function HomePage() {
   const { setPopularSupplements, setNewSupplements: setNewSupplements, setTopUsers } =
     actionDispatch(useDispatch());
   // Selecrtor: Store => Data
+console.log(process.env.REACT_APP_API_URL);
+  
 
   useEffect(() => {
     const product = new ProductService();

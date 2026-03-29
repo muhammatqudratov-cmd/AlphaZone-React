@@ -183,7 +183,7 @@
 } */
 
 
- .products-page .products .restaurant-avatars-wrapper {
+ .products-page .products .GYM-avatars-wrapper {
     width: 90%;
     height: 147px;
     display: flex;
@@ -193,7 +193,7 @@
     overflow: hidden;
  }
 
- .products-page .products .restaurant-avatars-wrapper .restaurant-avatars {
+ .products-page .products .GYM-avatars-wrapper .GYM-avatars {
     width: 108px;
     height: 100%;
     display: flex;
@@ -202,13 +202,13 @@
     justify-content: center;
  }
 
- .products-page .products .restaurant-avatars img {
+ .products-page .products .GYM-avatars img {
     width: 108px;
     height: 108px;
     border-radius: 50%;
  }
 
- .products-page .products .restaurant-avatars span {
+ .products-page .products .GYM-avatars span {
     margin-top: 14px;
     font-family: "Solway";
     font-style: normal;

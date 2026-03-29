@@ -47,8 +47,8 @@ export default function UserPage() {
                   <div className={"order-user-icon-box"}>
                     <img
                       src={
-                        authMember?.memberType === MemberType.RESTAURANT
-                          ? "/icons/restaurant.svg"
+                        authMember?.memberType === MemberType.GYM
+                          ? "/icons/GYM.svg"
                           : "/icons/user-badge.svg"
                       }
                     />

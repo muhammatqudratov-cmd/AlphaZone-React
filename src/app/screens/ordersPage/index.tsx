@@ -31,7 +31,7 @@ export default function OrdersPage() {
   const { orderBuilder, authMember } = useGlobals();
   const history = useHistory();
   const [value, setValue] = useState("1");
-  const [orderInquery, setOrderInquery] = useState<OrderInquiry>({
+  const [orderInquery,] = useState<OrderInquiry>({
     page: 1,
     limit: 5,
     orderStatus: OrderStatus.PAUSE,
@@ -106,7 +106,7 @@ export default function OrdersPage() {
                 <div className={"order-user-icon-box"}>
                   <img
                     src={
-                      authMember?.memberType === MemberType.RESTAURANT
+                      authMember?.memberType === MemberType.GYM
                         ? "/icons/arm-muscle.png"
                         : "/icons/user-badge.svg"
                     }

@@ -11,12 +11,12 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 
-import { setRestaurant, setChosenProduct } from "./slice";
+import { setGYM, setChosenProduct } from "./slice";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { Product } from "../../../lib/types/product";
 import { createSelector } from "reselect";
-import { retrieveChosenProduct, retrieveRestaurant } from "./selector";
+import { retrieveChosenProduct, retrieveGYM } from "./selector";
 import { useParams } from "react-router-dom";
 import ProductService from "../../services/ProductSevice";
 import MemberService from "../../services/MemberService";
@@ -26,7 +26,7 @@ import { CartItem } from "../../../lib/types/search";
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
-  setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
+  setGYM: (data: Member) => dispatch(setGYM(data)),
   setChosenProduct: (data: Product) => dispatch(setChosenProduct(data)),
 });
 const chosenProductRetriever = createSelector(
@@ -34,9 +34,9 @@ const chosenProductRetriever = createSelector(
   (chosenProduct) => ({ chosenProduct }),
 );
 
-const restaurantRetriever = createSelector(
-  retrieveRestaurant,
-  (restaurant) => ({ restaurant }),
+const GYMRetriever = createSelector(
+  retrieveGYM,
+  (GYM) => ({ GYM }),
 );
 
 interface ChosenProductProps {
@@ -46,10 +46,10 @@ interface ChosenProductProps {
 export default function ChosenProduct(props: ChosenProductProps) {
   const { onAdd } = props;
   const { productId } = useParams<{ productId: string }>();
-  const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
+  const { setGYM, setChosenProduct } = actionDispatch(useDispatch());
 
   const { chosenProduct } = useSelector(chosenProductRetriever);
-  const { restaurant } = useSelector(restaurantRetriever);
+  const { GYM } = useSelector(GYMRetriever);
 
   useEffect(() => {
     const product = new ProductService();
@@ -60,8 +60,8 @@ export default function ChosenProduct(props: ChosenProductProps) {
 
     const member = new MemberService();
     member
-      .getRestaurant()
-      .then((data) => setRestaurant(data))
+      .getGYM()
+      .then((data) => setGYM(data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -93,8 +93,8 @@ export default function ChosenProduct(props: ChosenProductProps) {
             <strong className={"product-name"}>
               {chosenProduct?.productName}
             </strong>
-            <span className={"resto-name"}>{restaurant?.memberNick}</span>
-            <span className={"resto-name"}>{restaurant?.memberPhone}</span>
+            <span className={"resto-name"}>{GYM?.memberNick}</span>
+            <span className={"resto-name"}>{GYM?.memberPhone}</span>
             <Box className={"rating-box"}>
               <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
               <div className={"evaluation-box"}>
