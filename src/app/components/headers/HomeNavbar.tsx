@@ -105,7 +105,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               </Box>
             ) : (
               <img
-                // className="user-avatar "
+                className="user-avatar "
                 src={
                   authMember?.memberImage
                     ? `${serverApi}/${authMember?.memberImage}`

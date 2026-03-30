@@ -337,19 +337,19 @@ export default function Products(props: ProductsProps) {
 
         <div className={"brands-logo"}>
           <Container className="family-brands">
-            <Box className="category-title">Popular Brands</Box>
+            <Box className="category-title">Popular Fitness Clubs</Box>
             <Stack className="brand-list">
               <Box className="review-box">
-                <img src="/img/gurme.webp" />
+                <img src="/img/1000s.jpg" />
               </Box>
               <Box className="review-box">
-                <img src="/img/seafood.webp" />
+                <img src="/img/fitness.webp" />
               </Box>
               <Box className="review-box">
-                <img src="/img/sweets.webp" />
+                <img src="/img/img.png" />
               </Box>
               <Box className="review-box">
-                <img src="/img/doner.webp" />
+                <img src="/img/kkk.jpg" />
               </Box>
             </Stack>
           </Container>
@@ -362,7 +362,7 @@ export default function Products(props: ProductsProps) {
 
               <iframe
                 style={{ marginTop: "60px", border: 0 }}
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3187.210666159875!2d28.253482575988368!3d36.98090435749227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bfbdda50386453%3A0xc3fea8dbda4c698!2sBurak%20GYM!5e0!3m2!1sru!2skr!4v1771497824188!5m2!1sru!2skr"
+                 src="https://www.google.com/maps?q=SpoAny+Fitness+Seoul&output=embed"
                 width="100%"
                 height="500"
                 allowFullScreen
@@ -371,10 +371,10 @@ export default function Products(props: ProductsProps) {
               />
 
               <Box className="map-overlay">
-                <h3>Burak GYM</h3>
+                <h3> Alpha Zone </h3>
                 <p>
                   <i>
-                    <b>Open Daily • 10:00 AM - 11:00 PM</b>
+                    <b>Open Daily • 06:00 AM - 11:00 PM</b>
                   </i>
                 </p>
               </Box>
