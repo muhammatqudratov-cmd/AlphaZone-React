@@ -1,21 +1,20 @@
 import React from "react";
-import { Box, Stack } from "@mui/material";
-import Button from "@mui/material/Button";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import TabPanel from "@mui/lab/TabPanel";
-
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrievePausedOrders } from "./selector";
-import { Messages, serverApi } from "../../../lib/config";
-import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
-import { Product } from "../../../lib/types/product";
+import { Messages } from "../../../lib/config";
+import { Order, OrderUpdateInput } from "../../../lib/types/order";
 import { T } from "../../../lib/types/common";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderService";
+import OrderCard from "./OrderCard";
+import { alphaZoneColors, alphaZoneSurface } from "../../../lib/alphaZone";
 
-/** REDUX SLICE & SELECTOR **/
 const pausedOrdersRetriever = createSelector(
   retrievePausedOrders,
   (pausedOrders) => ({ pausedOrders }),
@@ -26,18 +25,16 @@ interface PausedOrdersProps {
 }
 
 export default function PausedOrders(props: PausedOrdersProps) {
-  const {setValue} = props;
-  const {authMember, setOrderBuilder} = useGlobals();
+  const { setValue } = props;
+  const { authMember, setOrderBuilder } = useGlobals();
   const { pausedOrders } = useSelector(pausedOrdersRetriever);
-
-  /** HANDLERS **/
 
   const deleteOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Messages.error2);
       const orderId = e.target.value;
       const input: OrderUpdateInput = {
-        orderId: orderId,
+        orderId,
         orderStatus: OrderStatus.DELETE,
       };
 
@@ -53,118 +50,87 @@ export default function PausedOrders(props: PausedOrdersProps) {
     }
   };
 
-   const processOrderHandler = async (e:T) => {
+  const processOrderHandler = async (e: T) => {
     try {
-      if(!authMember) throw new Error(Messages.error2);
-      // PAYMENT PROCESS HERE
+      if (!authMember) throw new Error(Messages.error2);
 
       const orderId = e.target.value;
       const input: OrderUpdateInput = {
-        orderId: orderId, 
+        orderId,
         orderStatus: OrderStatus.PROCESS,
       };
 
       const confirmation = window.confirm(
-        "Do you want to proceed with payment?"
+        "Do you want to proceed with payment?",
       );
-      if(confirmation) {
+      if (confirmation) {
         const order = new OrderService();
         await order.updateOrder(input);
         setValue("2");
         setOrderBuilder(new Date());
       }
-
     } catch (err) {
       console.log(err);
       sweetErrorHandling(err).then();
     }
-  }
-
+  };
 
   return (
-    <TabPanel value={"1"}>
-      <Stack>
+    <TabPanel value={"1"} sx={{ p: 0 }}>
+      <Stack spacing={2}>
         {pausedOrders?.map((order: Order) => (
-          <Box key={order._id} className={"order-main-box"}>
-            <Box className={"order-box-scroll"}>
-              {order?.orderItems?.map((item: OrderItem) => {
-                const product: Product = order.productData.filter(
-                  (ele: Product) => item.productId === ele._id,
-                )[0];
-                const imagePath = `${serverApi}/${product.productImages[0]}`;
-                return (
-                  <Box key={item._id} className={"orders-name-price"}>
-                    <img src={imagePath} className={"order-dish-img"} />
-                    <p className={"title-dish"}>{product.productName}</p>
-
-                    <Box className={"price-box"}>
-                      <p>${item.itemPrice}</p>
-                      <img src={"/icons/close.svg"} alt="close" />
-                      <p>{item.itemQuantity}</p>
-                      <img src={"/icons/pause.svg"} alt="pause" />
-                      <p style={{ marginLeft: "15px" }}>
-                        ${item.itemQuantity * item.itemPrice}
-                      </p>
-                    </Box>
-                  </Box>
-                );
-              })}
-            </Box>
-
-            <Box className={"total-price-box"}>
-              <Box className={"box-total"}>
-                <p>Product price</p>
-                <p>${order.orderTotal - order.orderDelivery}</p>
-                <img
-                  src={"/icons/plus.svg"}
-                  style={{ marginLeft: "20px" }}
-                  alt="plus"
-                />
-                <p>Delivery cost</p>
-                <p>${order.orderDelivery}</p>
-                <img
-                  src={"/icons/pause.svg"}
-                  style={{ marginLeft: "20px" }}
-                  alt="separator"
-                />
-                <p>Total</p>
-                <p>${order.orderTotal}</p>
-              </Box>
-
-              <Button
-                value={order._id}
-                variant="contained"
-                className={"cancel-button"}
-                onClick={deleteOrderHandler}
-              >
-                Cancel Order
-              </Button>
-
-              <Button
-                value={order._id}
-                variant="contained"
-                className={"pay-button"}
-                onClick={processOrderHandler}
-              >
-                Payment
-              </Button>
-            </Box>
-          </Box>
+          <OrderCard
+            key={order._id}
+            order={order}
+            actions={
+              <>
+                <Button
+                  value={order._id}
+                  variant="outlined"
+                  onClick={deleteOrderHandler}
+                  sx={{
+                    borderColor: alpha(alphaZoneColors.slate, 0.16),
+                    color: alphaZoneColors.slate,
+                    "&:hover": {
+                      borderColor: alpha(alphaZoneColors.slate, 0.26),
+                      backgroundColor: alpha(alphaZoneColors.slate, 0.06),
+                    },
+                  }}
+                >
+                  Cancel Order
+                </Button>
+                <Button
+                  value={order._id}
+                  variant="contained"
+                  onClick={processOrderHandler}
+                  sx={{
+                    color: alphaZoneColors.ink,
+                    backgroundColor: alphaZoneColors.mint,
+                    "&:hover": {
+                      backgroundColor: alphaZoneColors.mintStrong,
+                    },
+                  }}
+                >
+                  Payment
+                </Button>
+              </>
+            }
+          />
         ))}
 
         {!pausedOrders ||
           (pausedOrders.length === 0 && (
             <Box
-              display={"flex"}
-              flexDirection={"row"}
-              justifyContent={"center"}
-              // alignItems={"center"}
+              sx={{
+                py: 8,
+                borderRadius: "32px",
+                textAlign: "center",
+                ...alphaZoneSurface(0.82),
+              }}
             >
-              <img
-                src={"/icons/noimage.svg"}
-                style={{ width: 300, height: 300 }}
-                alt="no orders"
-              />
+              <Typography sx={{ color: alphaZoneColors.ink, fontWeight: 600 }}>
+                No pending orders yet.
+              </Typography>
             </Box>
           ))}
       </Stack>

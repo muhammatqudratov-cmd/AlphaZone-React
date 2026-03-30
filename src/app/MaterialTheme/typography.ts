@@ -1,35 +1,52 @@
-export default {
+const typography = {
+	fontFamily: '"Space Grotesk", "Manrope", "Segoe UI", sans-serif',
 	h1: {
-		fontWeight: 500,
-		fontSize: 35,
-		letterSpacing: '-0.24px',
+		fontWeight: 700,
+		fontSize: 54,
+		letterSpacing: '-0.06em',
 	},
 	h2: {
-		fontWeight: 500,
-		fontSize: 29,
-		letterSpacing: '-0.24px',
+		fontWeight: 700,
+		fontSize: 42,
+		letterSpacing: '-0.05em',
 	},
 	h3: {
-		fontWeight: 500,
-		fontSize: 24,
-		letterSpacing: '-0.06px',
+		fontWeight: 700,
+		fontSize: 32,
+		letterSpacing: '-0.04em',
 	},
 	h4: {
-		fontWeight: 500,
-		fontSize: 20,
-		letterSpacing: '-0.06px',
+		fontWeight: 700,
+		fontSize: 26,
+		letterSpacing: '-0.03em',
 	},
 	h5: {
-		fontWeight: 500,
-		fontSize: 16,
-		letterSpacing: '-0.05px',
+		fontWeight: 600,
+		fontSize: 20,
+		letterSpacing: '-0.02em',
 	},
 	h6: {
-		fontWeight: 500,
+		fontWeight: 600,
+		fontSize: 16,
+		letterSpacing: '-0.01em',
+	},
+	body1: {
+		fontSize: 16,
+		lineHeight: 1.7,
+	},
+	body2: {
 		fontSize: 14,
-		letterSpacing: '-0.05px',
+		lineHeight: 1.65,
+	},
+	button: {
+		fontWeight: 700,
+		letterSpacing: '0.01em',
+		textTransform: 'none' as const,
 	},
 	overline: {
-		fontWeight: 500,
+		fontWeight: 700,
+		letterSpacing: '0.18em',
 	},
 };
+
+export default typography;

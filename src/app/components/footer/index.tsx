@@ -1,171 +1,114 @@
 import React from "react";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, Stack, Typography, Divider, IconButton, Link as MuiLink } from "@mui/material";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-
-const Footers = styled.div`
-  width: 100%;
-  height: 590px;
-  display: flex;
-  background: #0A0A0F;
-  border-top: 1px solid rgba(255, 107, 0, 0.15);
-  background-size: cover;
-`;
+import { alpha } from "@mui/material/styles";
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
 export default function Footer() {
-  const authMember = null;
+  const authMember = null; // useGlobals orqali bog'lanadi
+
+  // Linklar uchun umumiy hover stili
+  const linkHoverStyle = {
+    color: "#457B9D",
+    textDecoration: "none",
+    fontSize: "14px",
+    fontWeight: 500,
+    transition: "0.3s",
+    "&:hover": {
+      color: "#A8DADC",
+      transform: "translateX(4px)",
+    },
+  };
 
   return (
-    <Footers>
-      <Container>
-        <Stack flexDirection={"row"} sx={{ mt: "94px" }}>
-          <Stack flexDirection={"column"} style={{ width: "340px" }}>
-            <Box>
-              <span style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: "32px",
-                letterSpacing: "4px",
-                background: "linear-gradient(90deg, #FF6B00, #E94560)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}>
-                ALPHAZONE
-              </span>
-            </Box>
-            <Box className={"foot-desc-txt"} style={{
-              color: "#7A7A9A",
-              fontSize: "14px",
-              lineHeight: "1.8",
-              marginTop: "16px",
-            }}>
-              Premium gym supplements, apparel and nutrition for athletes who
-              never settle. Train harder. Recover faster. Dominate.
-            </Box>
-            <Box className="sns-context" sx={{ mt: "24px", display: "flex", gap: "12px" }}>
-              {["facebook", "twitter", "instagram", "youtube"].map((icon) => (
-                <Box key={icon} sx={{
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "8px",
-                  border: "1px solid rgba(255,107,0,0.2)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  transition: "border-color 0.2s, background 0.2s",
-                  "&:hover": {
-                    borderColor: "#FF6B00",
-                    background: "rgba(255,107,0,0.1)",
-                  }
-                }}>
-                  <img src={`/icons/${icon}.svg`} style={{ width: "18px", filter: "brightness(0.7)" }} />
-                </Box>
+    <Box 
+      component="footer" 
+      sx={{ 
+        width: "100%", 
+        bgcolor: "#FFFFFF", 
+        borderTop: "1px solid #F1FAEE", 
+        pt: 10, pb: 4 
+      }}
+    >
+      <Container maxWidth="lg">
+        <Stack direction={{ xs: "column", md: "row" }} justifyContent="space-between" spacing={8}>
+          
+          {/* Brand Section */}
+          <Stack spacing={3} sx={{ flex: 1, maxWidth: "320px" }}>
+            <Typography variant="h5" sx={{ fontWeight: 900, color: "#1D3557", letterSpacing: "-0.5px" }}>
+              ALPHA<span style={{ color: "#A8DADC" }}>ZONE</span>
+            </Typography>
+            <Typography sx={{ color: "#7A7A9A", fontSize: "14px", lineHeight: 1.8 }}>
+              Premium supplements and professional gym equipment for those who strive for greatness. Elevate your workout today.
+            </Typography>
+            <Stack direction="row" spacing={1}>
+              {[<FacebookIcon />, <TwitterIcon />, <InstagramIcon />, <YouTubeIcon />].map((icon, i) => (
+                <IconButton 
+                  key={i} 
+                  size="small"
+                  sx={{ 
+                    color: "#457B9D", 
+                    bgcolor: "#F8FAF9",
+                    "&:hover": { bgcolor: alpha("#A8DADC", 0.2), color: "#1D3557" } 
+                  }}
+                >
+                  {React.cloneElement(icon as React.ReactElement, )}
+                </IconButton>
               ))}
-            </Box>
+            </Stack>
           </Stack>
 
-          <Stack sx={{ ml: "288px" }} flexDirection={"row"}>
-            <Stack>
-              <Box>
-                <Box className={"foot-category-title"} style={{
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: "18px",
-                  letterSpacing: "3px",
-                  color: "#FF6B00",
-                  marginBottom: "20px",
-                }}>
-                  Bo'limlar
-                </Box>
-                <Box className={"foot-category-link"} style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "12px",
-                }}>
-                  {[
-                    { to: "/", label: "Home" },
-                    { to: "/products", label: "Products" },
-                    ...(authMember ? [{ to: "/orders", label: "Orders" }] : []),
-                    { to: "/help", label: "Help" },
-                  ].map((item) => (
-                    <Link key={item.to} to={item.to} style={{
-                      color: "#7A7A9A",
-                      textDecoration: "none",
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      letterSpacing: "0.5px",
-                      transition: "color 0.2s",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#FF6B00")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "#7A7A9A")}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </Box>
-              </Box>
+          {/* Navigation & Info */}
+          <Stack direction="row" spacing={{ xs: 4, sm: 10 }}>
+            
+            {/* Sections */}
+            <Stack spacing={2.5}>
+              <Typography sx={{ fontWeight: 700, color: "#1D3557", fontSize: "14px", textTransform: "uppercase" }}>
+                Explore
+              </Typography>
+              <Stack spacing={1.5}>
+                <MuiLink component={Link} to="/" sx={linkHoverStyle}>Home</MuiLink>
+                <MuiLink component={Link} to="/products" sx={linkHoverStyle}>Products</MuiLink>
+                {authMember && <MuiLink component={Link} to="/orders" sx={linkHoverStyle}>Orders</MuiLink>}
+                <MuiLink component={Link} to="/help" sx={linkHoverStyle}>Support</MuiLink>
+              </Stack>
             </Stack>
 
-            <Stack sx={{ ml: "100px" }}>
-              <Box>
-                <Box className={"foot-category-title"} style={{
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: "18px",
-                  letterSpacing: "3px",
-                  color: "#FF6B00",
-                  marginBottom: "20px",
-                }}>
-                  Find us
+            {/* Contact */}
+            <Stack spacing={2.5}>
+              <Typography sx={{ fontWeight: 700, color: "#1D3557", fontSize: "14px", textTransform: "uppercase" }}>
+                Contact
+              </Typography>
+              <Stack spacing={2}>
+                <Box>
+                  <Typography sx={{ fontSize: "12px", color: "#A8DADC", fontWeight: 700 }}>LOCATION</Typography>
+                  <Typography sx={{ fontSize: "14px", color: "#457B9D" }}>Seoul, South Korea</Typography>
                 </Box>
-                <Box
-                  flexDirection={"column"}
-                  sx={{ mt: "20px" }}
-                  className={"foot-category-link"}
-                  justifyContent={"space-between"}
-                >
-                  {[
-                    { label: "L.", value: "Downtown, South Korea" },
-                    { label: "P.", value: "+82 010 5748 2425" },
-                    { label: "E.", value: "alphagym@gmail.com" },
-                    { label: "H.", value: "Visit 24 hours" },
-                  ].map((item) => (
-                    <Box key={item.label} className={"find-us"} sx={{
-                      display: "flex",
-                      gap: "10px",
-                      mb: "12px",
-                      alignItems: "flex-start",
-                    }}>
-                      <span style={{
-                        color: "#FF6B00",
-                        fontWeight: 700,
-                        fontSize: "13px",
-                        minWidth: "20px",
-                      }}>{item.label}</span>
-                      <div style={{ color: "#7A7A9A", fontSize: "14px" }}>{item.value}</div>
-                    </Box>
-                  ))}
+                <Box>
+                  <Typography sx={{ fontSize: "12px", color: "#A8DADC", fontWeight: 700 }}>EMAIL</Typography>
+                  <Typography sx={{ fontSize: "14px", color: "#457B9D" }}>info@alphazone.com</Typography>
                 </Box>
-              </Box>
+              </Stack>
             </Stack>
+
           </Stack>
         </Stack>
 
-        <Stack
-          style={{
-            border: "1px solid rgba(255,107,0,0.15)",
-            width: "100%",
-          }}
-          sx={{ mt: "80px" }}
-        />
-        <Stack className={"copyright-txt"} style={{
-          color: "#7A7A9A",
-          fontSize: "13px",
-          marginTop: "24px",
-          textAlign: "center",
-          letterSpacing: "0.5px",
-        }}>
-          © Copyright AlphaZone, All rights reserved.
+        <Divider sx={{ mt: 8, mb: 4, opacity: 0.5 }} />
+
+        <Stack direction={{ xs: "column", sm: "row" }} justifyContent="space-between" alignItems="center" spacing={2}>
+          <Typography sx={{ color: "#7A7A9A", fontSize: "12px" }}>
+            © {new Date().getFullYear()} AlphaZone. Minimalism at its best.
+          </Typography>
+          <Stack direction="row" spacing={3}>
+            <MuiLink component={Link} to="/terms" sx={{ fontSize: "12px", color: "#7A7A9A", textDecoration: "none" }}>Privacy</MuiLink>
+            <MuiLink component={Link} to="/terms" sx={{ fontSize: "12px", color: "#7A7A9A", textDecoration: "none" }}>Terms</MuiLink>
+          </Stack>
         </Stack>
       </Container>
-    </Footers>
+    </Box>
   );
 }

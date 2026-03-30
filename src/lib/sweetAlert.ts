@@ -2,13 +2,16 @@ import Swal from "sweetalert2";
 import { Messages } from "./config";
 
 const gymStyle = {
-  background: "#0f172a", // dark navy
-  color: "#e5e7eb",
-  backdrop: "rgba(0,0,0,0.8)",
+  background: "#FDFEFE",
+  color: "#183642",
+  backdrop: "rgba(24,54,66,0.22)",
+  buttonsStyling: false,
   customClass: {
-    popup: "rounded-2xl shadow-2xl",
-    title: "text-lg font-semibold",
-    htmlContainer: "text-sm opacity-80",
+    popup: "alpha-swal-popup",
+    title: "alpha-swal-title",
+    htmlContainer: "alpha-swal-content",
+    confirmButton: "alpha-swal-confirm",
+    cancelButton: "alpha-swal-cancel",
   },
 };
 
@@ -24,7 +27,7 @@ export const sweetErrorHandling = async (err: any) => {
     text: message,
     showConfirmButton: true,
     confirmButtonText: "OK",
-    confirmButtonColor: "#ef4444", // red
+    iconColor: "#457B9D",
   });
 };
 
@@ -52,11 +55,16 @@ export const sweetTopSmallSuccessAlert = async (
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
-    background: "#111827",
-    color: "#d1fae5",
+    background: "#FDFEFE",
+    color: "#183642",
+    iconColor: "#457B9D",
     showConfirmButton: false,
     timer: duration,
     timerProgressBar: true,
+    customClass: {
+      popup: "alpha-swal-popup",
+      title: "alpha-swal-title",
+    },
   });
 
   Toast.fire({
@@ -77,7 +85,7 @@ export const sweetFailureProvider = (
     title: msg,
     showConfirmButton: show_button,
     confirmButtonText: "OK",
-    confirmButtonColor: "#ef4444",
+    iconColor: "#457B9D",
   }).then(() => {
     if (forward_url !== "") {
       window.location.replace(forward_url);

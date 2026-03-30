@@ -1,10 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Manrope", "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #183642;
+  background: #f7fbf8;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(168, 218, 220, 0.45);
+  color: #183642;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(69, 123, 157, 0.22);
+  border-radius: 999px;
+}
+
+.alpha-swal-popup {
+  border-radius: 24px;
+  border: 1px solid rgba(69, 123, 157, 0.14);
+  box-shadow: 0 24px 60px rgba(69, 123, 157, 0.16);
+}
+
+.alpha-swal-title {
+  font-family: "Space Grotesk", "Manrope", sans-serif;
+  color: #183642;
+  letter-spacing: -0.03em;
+}
+
+.alpha-swal-content {
+  color: #5f7481;
+  line-height: 1.7;
+}
+
+.alpha-swal-confirm,
+.alpha-swal-cancel {
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+  font-weight: 700;
+  padding: 0.85rem 1.5rem;
+}
+
+.alpha-swal-confirm {
+  background: #a8dadc;
+  color: #183642;
+}
+
+.alpha-swal-cancel {
+  background: rgba(69, 123, 157, 0.1);
+  color: #457b9d;
 }
 
 code {

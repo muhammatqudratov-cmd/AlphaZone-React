@@ -1,6 +1,5 @@
-import { Box } from "@mui/material";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import Button from "@mui/material/Button";
+import { Avatar, Button, Stack, TextField, Typography } from "@mui/material";
+import CloudUploadRoundedIcon from "@mui/icons-material/CloudUploadRounded";
 import { useGlobals } from "../../hooks/useGlobals";
 import { MemberUpdateInput } from "../../../lib/types/member";
 import { useState } from "react";
@@ -11,6 +10,10 @@ import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
+import {
+  alphaZoneColors,
+  alphaZoneInputSx,
+} from "../../../lib/alphaZone";
 
 export function Settings() {
   const { authMember, setAuthMember } = useGlobals();
@@ -19,36 +22,28 @@ export function Settings() {
       ? `${serverApi}/${authMember.memberImage}`
       : "/icons/default-user.svg",
   );
-  const [memberUpdateInput, setMemberUpdateInput] = useState<MemberUpdateInput>(
-    {
-      memberNick: authMember?.memberNick,
-      memberPhone: authMember?.memberPhone,
-      memberAddress: authMember?.memberAddress,
-      memberDesc: authMember?.memberDesc,
-      memberImage: authMember?.memberImage,
-    },
-  );
-
-  /** HANDLER **/
+  const [memberUpdateInput, setMemberUpdateInput] = useState<MemberUpdateInput>({
+    memberNick: authMember?.memberNick,
+    memberPhone: authMember?.memberPhone,
+    memberAddress: authMember?.memberAddress,
+    memberDesc: authMember?.memberDesc,
+    memberImage: authMember?.memberImage,
+  });
 
   const memberNickHandler = (e: T) => {
-    memberUpdateInput.memberNick = e.target.value;
-    setMemberUpdateInput({ ...memberUpdateInput });
+    setMemberUpdateInput((prev) => ({ ...prev, memberNick: e.target.value }));
   };
 
   const memberPhoneHandler = (e: T) => {
-    memberUpdateInput.memberPhone = e.target.value;
-    setMemberUpdateInput({ ...memberUpdateInput });
+    setMemberUpdateInput((prev) => ({ ...prev, memberPhone: e.target.value }));
   };
 
   const memberAddressHandler = (e: T) => {
-    memberUpdateInput.memberAddress = e.target.value;
-    setMemberUpdateInput({ ...memberUpdateInput });
+    setMemberUpdateInput((prev) => ({ ...prev, memberAddress: e.target.value }));
   };
 
   const memberDescriptionHandler = (e: T) => {
-    memberUpdateInput.memberDesc = e.target.value;
-    setMemberUpdateInput({ ...memberUpdateInput });
+    setMemberUpdateInput((prev) => ({ ...prev, memberDesc: e.target.value }));
   };
 
   const handleSubmitButton = async () => {
@@ -76,98 +71,126 @@ export function Settings() {
 
   const handleImageViewer = (e: T) => {
     const file = e.target.files[0];
-    console.log("file:", file);
-    const fileType = file.type,
-      validateImageTypes = ["image/jpg", "image/jpeg", "image/png"];
+    if (!file) return;
+
+    const fileType = file.type;
+    const validateImageTypes = ["image/jpg", "image/jpeg", "image/png"];
 
     if (!validateImageTypes.includes(fileType)) {
       sweetErrorHandling(Messages.error5).then();
     } else {
-      if (file) {
-        memberUpdateInput.memberImage = file;
-        setMemberUpdateInput({ ...memberUpdateInput });
-        setMemberImage(URL.createObjectURL(file));
-      }
+      setMemberUpdateInput((prev) => ({ ...prev, memberImage: file }));
+      setMemberImage(URL.createObjectURL(file));
     }
   };
 
   return (
-    <Box className={"settings"}>
-      <Box className={"member-media-frame"}>
-        <img src={memberImage} className={"mb-image"} />
-        <div className={"media-change-box"}>
-          <span>Upload image</span>
-          <p>JPG, JPEG, PNG formats only!</p>
-          <div className={"up-del-box"}>
-            <Button component="label" onChange={handleImageViewer}>
-              <CloudDownloadIcon />
-              <input type="file" hidden />
-            </Button>
-          </div>
-        </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"long-input"}>
-          <label className={"spec-label"}>Username</label>
-          <input
-            className={"spec-input mb-nick"}
-            type="text"
-            placeholder={authMember?.memberNick}
-            value={memberUpdateInput.memberNick}
-            name="memberNick"
-            onChange={memberNickHandler}
-          />
-        </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"short-input"}>
-          <label className={"spec-label"}>Phone</label>
-          <input
-            className={"spec-input mb-phone"}
-            type="text"
-            placeholder={authMember?.memberPhone ?? "no phone number"}
-            value={memberUpdateInput.memberPhone}
-            name="memberPhone"
-            onChange={memberPhoneHandler}
-          />
-        </div>
-        <div className={"short-input"}>
-          <label className={"spec-label"}>Address</label>
-          <input
-            className={"spec-input  mb-address"}
-            type="text"
-            placeholder={
-              authMember?.memberAddress
-                ? authMember.memberAddress
-                : "no member address"
-            }
-            value={memberUpdateInput.memberAddress}
-            name="memberAddress"
-            onChange={memberAddressHandler}
-          />
-        </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"long-input"}>
-          <label className={"spec-label"}>Description</label>
-          <textarea
-            className={"spec-textarea mb-description"}
-            placeholder={
-              authMember?.memberDesc
-                ? authMember.memberDesc
-                : "no member description"
-            }
-            value={memberUpdateInput.memberDesc}
-            name="memberDesc"
-            onChange={memberDescriptionHandler}
-          />
-        </div>
-      </Box>
-      <Box className={"save-box"}>
-        <Button variant={"contained"} onClick={handleSubmitButton}>
-          Save
-        </Button>
-      </Box>
-    </Box>
+    <Stack spacing={3}>
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={2.5}
+        alignItems={{ xs: "flex-start", md: "center" }}
+      >
+        <Avatar
+          src={memberImage}
+          sx={{
+            width: 100,
+            height: 100,
+            borderRadius: "28px",
+            boxShadow: "0 18px 38px rgba(69,123,157,0.14)",
+          }}
+        />
+
+        <Stack spacing={1}>
+          <Typography
+            sx={{
+              color: alphaZoneColors.ink,
+              fontWeight: 700,
+              fontSize: "1.15rem",
+            }}
+          >
+            Update your profile image
+          </Typography>
+          <Typography
+            sx={{
+              color: alphaZoneColors.slate,
+              lineHeight: 1.7,
+              fontSize: "0.92rem",
+            }}
+          >
+            Upload JPG, JPEG, or PNG to keep your Alpha Zone dashboard fresh.
+          </Typography>
+          <Button
+            component="label"
+            startIcon={<CloudUploadRoundedIcon />}
+            sx={{
+              alignSelf: "flex-start",
+              color: alphaZoneColors.ink,
+              backgroundColor: alphaZoneColors.mint,
+              "&:hover": {
+                backgroundColor: alphaZoneColors.mintStrong,
+              },
+            }}
+          >
+            Upload image
+            <input type="file" hidden onChange={handleImageViewer} />
+          </Button>
+        </Stack>
+      </Stack>
+
+      <TextField
+        label="Username"
+        value={memberUpdateInput.memberNick ?? ""}
+        placeholder={authMember?.memberNick}
+        onChange={memberNickHandler}
+        fullWidth
+        sx={alphaZoneInputSx}
+      />
+
+      <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
+        <TextField
+          label="Phone"
+          value={memberUpdateInput.memberPhone ?? ""}
+          placeholder={authMember?.memberPhone ?? "no phone number"}
+          onChange={memberPhoneHandler}
+          fullWidth
+          sx={alphaZoneInputSx}
+        />
+        <TextField
+          label="Address"
+          value={memberUpdateInput.memberAddress ?? ""}
+          placeholder={authMember?.memberAddress ?? "no member address"}
+          onChange={memberAddressHandler}
+          fullWidth
+          sx={alphaZoneInputSx}
+        />
+      </Stack>
+
+      <TextField
+        label="Description"
+        value={memberUpdateInput.memberDesc ?? ""}
+        placeholder={authMember?.memberDesc ?? "no member description"}
+        onChange={memberDescriptionHandler}
+        fullWidth
+        multiline
+        minRows={5}
+        sx={alphaZoneInputSx}
+      />
+
+      <Button
+        variant="contained"
+        onClick={handleSubmitButton}
+        sx={{
+          alignSelf: "flex-start",
+          color: alphaZoneColors.ink,
+          backgroundColor: alphaZoneColors.mint,
+          "&:hover": {
+            backgroundColor: alphaZoneColors.mintStrong,
+          },
+        }}
+      >
+        Save Changes
+      </Button>
+    </Stack>
   );
 }
