@@ -33,9 +33,8 @@ interface ProductsProps {
   onAdd: (item: CartItem) => void;
 }
 
-
-export default function Products(props:ProductsProps) {
-  const {onAdd} = props;
+export default function Products(props: ProductsProps) {
+  const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
@@ -87,9 +86,9 @@ export default function Products(props:ProductsProps) {
     setProductSearch({ ...productSearch });
   };
 
-  const chooseDishHandler = (id : string) => {
+  const chooseDishHandler = (id: string) => {
     history.push(`/products/${id}`);
-  }
+  };
 
   return (
     <div className={"products-page"}>
@@ -222,7 +221,8 @@ export default function Products(props:ProductsProps) {
                   <Button
                     variant={"contained"}
                     color={
-                      productSearch.productCollection === ProductCollection.POWDER
+                      productSearch.productCollection ===
+                      ProductCollection.POWDER
                         ? "primary"
                         : "secondary"
                     }
@@ -238,15 +238,17 @@ export default function Products(props:ProductsProps) {
               <Stack className={"product-wrapper"}>
                 {products.length !== 0 ? (
                   products.map((product: Product) => {
-                    const imagePath = `${serverApi}/${product.productImages[0]}`;  
+                    // TO'G'RI
+                    const imagePath = `${serverApi}/${product.productImages[0]}`;
                     const sizeVolume =
                       product.productCollection === ProductCollection.DRINK
-                        ? product.ProductVolume + " litre"
+                        ? product.productWeight + " g"
                         : product.productSize + " size";
                     return (
                       <React.Fragment key={product._id}>
-                        <Stack className={"product-card"}
-                        onClick = {() => chooseDishHandler(product._id)}
+                        <Stack
+                          className={"product-card"}
+                          onClick={() => chooseDishHandler(product._id)}
                         >
                           <Stack
                             className={"product-img"}
@@ -256,17 +258,18 @@ export default function Products(props:ProductsProps) {
                           >
                             <div className="product-sale">{sizeVolume}</div>
 
-                            <Button className={"shop-btn"}
-                            onClick={(e: any) => {
-                              onAdd({
-                                _id: product._id,
-                                quantity: 1,
-                                name: product.productName,
-                                price: product.productPrice,
-                                image: product.productImages[0],
-                              });
-                              e.stopPropagation();
-                            }}
+                            <Button
+                              className={"shop-btn"}
+                              onClick={(e: any) => {
+                                onAdd({
+                                  _id: product._id,
+                                  quantity: 1,
+                                  name: product.productName,
+                                  price: product.productPrice,
+                                  image: product.productImages[0],
+                                });
+                                e.stopPropagation();
+                              }}
                             >
                               <img src={"icons/shopping-cart.svg"} alt="" />
                             </Button>

@@ -18,12 +18,12 @@ import { serverApi } from "../../../lib/config";
 /** REDUX SLICE & SELECTOR **/
 const popularSupplementsRetriever = createSelector(
   retrievePopularSupplements,
-  (popularSupplements) => ({popularSupplements }),
+  (popularSupplements) => ({ popularSupplements }),
 );
 
 export default function PopularSupplements() {
   const { popularSupplements } = useSelector(popularSupplementsRetriever);
-  console.log("popularDishes:", popularSupplements)
+  console.log("popularDishes:", popularSupplements);
 
   return (
     <div className="popular-dishes-frame">
@@ -36,7 +36,15 @@ export default function PopularSupplements() {
                 const imagePath = `${serverApi}/${product.productImages[0]}`;
                 return (
                   <CssVarsProvider key={product._id}>
-                    <Card className={"card"}>
+                    <Card
+                      className={"card"}
+                      sx={{
+                        width: 300,
+                        height: 300,
+                        minWidth: 300,
+                        minHeight: 300,
+                      }}
+                    >
                       <CardCover>
                         <img src={imagePath} alt="" />
                       </CardCover>

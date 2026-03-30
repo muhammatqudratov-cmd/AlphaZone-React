@@ -25,79 +25,41 @@ const actionDispatch = (dispatch: Dispatch) => ({
 export default function HomePage() {
   const { setPopularSupplements, setNewSupplements: setNewSupplements, setTopUsers } =
     actionDispatch(useDispatch());
-  // Selecrtor: Store => Data
-console.log(process.env.REACT_APP_API_URL);
+
   
 
-  useEffect(() => {
-    const product = new ProductService();
-    product
-      .getProducts({
-        page: 1,
-        limit: 4,
-        order: "productViews",
-        productCollection: ProductCollection.CAPSULE,
-      })
-      .then((data) => {
-        setPopularSupplements(data);
-      })
-      .catch((err) => console.log(err));
+useEffect(() => {
+  const product = new ProductService();
 
-    product
-      .getProducts({
-        page: 1,
-        limit: 4,
-        order: "createdAt",
-        productCollection: ProductCollection.DRINK,
-      })
-      .then((data) => {
-        setNewSupplements(data);
-      })
-      .catch((err) => console.log(err));
+  // Popular — CAPSULE
+  product
+    .getProducts({
+      page: 1,
+      limit: 4,
+      order: "productViews",
+      productCollection: ProductCollection.CAPSULE,
+    })
+    .then((data) => setPopularSupplements(data))
+    .catch((err) => console.log(err));
 
-       product
-      .getProducts({
-        page: 1,
-        limit: 4,
-        order: "createdAt",
-        productCollection: ProductCollection.POWDER,
-      })
-      .then((data) => {
-        setNewSupplements(data);
-      })
-      .catch((err) => console.log(err));
+  // New Arrivals — POWDER (sening bazangda bor)
+  product
+    .getProducts({
+      page: 1,
+      limit: 4,
+      order: "createdAt",
+      productCollection: ProductCollection.POWDER,
+    })
+    .then((data) => setNewSupplements(data))
+    .catch((err) => console.log(err));
 
-       product
-      .getProducts({
-        page: 1,
-        limit: 4,
-        order: "createdAt",
-        productCollection: ProductCollection.SNACK,
-      })
-      .then((data) => {
-        setNewSupplements(data);
-      })
-      .catch((err) => console.log(err));
+  const member = new MemberService();
+  member
+    .getTopUsers()
+    .then((data) => setTopUsers(data))
+    .catch((err) => console.log(err));
 
-       product
-      .getProducts({
-        page: 1,
-        limit: 4,
-        order: "createdAt",
-        productCollection: ProductCollection.VITAMIN,
-      })
-      .then((data) => {
-        setNewSupplements(data);
-      })
-      .catch((err) => console.log(err));
-
-    const member = new MemberService();
-    member
-      .getTopUsers()
-      .then((data) => setTopUsers(data))
-      .catch((err) => console.log(err));
-  }, [setNewSupplements, setPopularSupplements, setTopUsers]);
-
+}, []);
   return (
     <div className={"homepage"}>
       <Statistics />
