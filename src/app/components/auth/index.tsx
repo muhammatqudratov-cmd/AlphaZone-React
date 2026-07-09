@@ -188,7 +188,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             >
               <Box
                 component="img"
-                src="/img/auth.webp"
+                src="/img/banner.jpg"
                 alt="Alpha Zone training"
                 sx={{
                   width: "100%",

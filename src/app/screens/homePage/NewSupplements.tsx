@@ -95,8 +95,7 @@ export default function NewSupplements() {
                     : product.productCollection === ProductCollection.VITAMIN
                       ? `${product.productSize ?? "-"} size`
                       : `${product.productWeight ?? "-"} g`;
-                const cardHeight =
-                  index % 3 === 0 ? 320 : index % 3 === 1 ? 420 : 360;
+                const cardHeight = 360;
 
                 return (
                   <Box
@@ -221,6 +220,11 @@ export default function NewSupplements() {
                                 fontSize: "1.15rem",
                                 fontWeight: 700,
                                 letterSpacing: "-0.03em",
+                                minWidth: 0,
+                                flex: 1,
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
                               }}
                             >
                               {product.productName}
@@ -240,6 +244,7 @@ export default function NewSupplements() {
                             sx={{
                               color: alpha(alphaZoneColors.ink, 0.68),
                               lineHeight: 1.75,
+                              minHeight: "3.5em",
                               display: "-webkit-box",
                               overflow: "hidden",
                               WebkitBoxOrient: "vertical",
